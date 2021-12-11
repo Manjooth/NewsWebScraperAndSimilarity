@@ -4,27 +4,35 @@ import java.util.ArrayList;
 
 public class Similarity {
 
-    public void checkSimilarity(ArrayList<String> sky, ArrayList<String> bbc) {
-        ArrayList<String> similarStories = new ArrayList<>(); //dynamic
-        for (int i = 0; i < sky.size(); i++) {
-            for (int j = 0; j < bbc.size(); j++) {
-                double checkSimilarity = similarity(sky.get(i), bbc.get(j));
-                if(checkSimilarity > 0.98){
-                    if(!similarStories.contains(sky.get(i))){
-                        similarStories.add(sky.get(i));
-                    }
-                    if(!similarStories.contains(bbc.get(j))){
-                        similarStories.add(bbc.get(j));
-                    }
-                }
-            }
-        }
+    private static ArrayList<String> similarStories = new ArrayList<>();
+
+    public void checkSimilarity(ArrayList<String> sky, ArrayList<String> bbc, ArrayList<String> independent) {
+
+        compareSources(sky, bbc);
+        compareSources(sky, independent);
+        compareSources(independent, bbc);
 
         for(String story : similarStories){
             System.out.println(story);
         }
 
         PopulateExcel.insertData(similarStories, "PopularTitles");
+    }
+
+    private void compareSources(ArrayList<String> sourceA, ArrayList<String> sourceB) {
+        for (int i = 0; i < sourceA.size(); i++) {
+            for (int j = 0; j < sourceB.size(); j++) {
+                double checkSimilarity = similarity(sourceA.get(i), sourceB.get(j));
+                if(checkSimilarity > 0.98){
+                    if(!similarStories.contains(sourceA.get(i))){
+                        similarStories.add(sourceA.get(i));
+                    }
+                    if(!similarStories.contains(sourceB.get(j))){
+                        similarStories.add(sourceB.get(j));
+                    }
+                }
+            }
+        }
     }
 
     public static double similarity(String sentenceA, String sentenceB) {
