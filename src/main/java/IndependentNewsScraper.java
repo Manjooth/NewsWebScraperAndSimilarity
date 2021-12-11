@@ -7,12 +7,12 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class BBCNewsScraper {
+public class IndependentNewsScraper {
     private final static ArrayList<String> headings = new ArrayList<>();
 
     public static ArrayList<String> run() {
-        Document document = getDocument("https://www.bbc.co.uk/news");
-        Elements rawHeadings = document.getElementsByClass("gs-c-promo-heading__title gel-pica-bold nw-o-link-split__text");
+        Document document = getDocument("https://www.independent.co.uk/");
+        Elements rawHeadings = document.getElementsByClass("title");
         for(Element title : rawHeadings) {
             if(!headings.contains(title.text())){
                 headings.add(title.text());

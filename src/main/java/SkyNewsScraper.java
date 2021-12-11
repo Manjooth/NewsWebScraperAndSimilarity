@@ -14,22 +14,11 @@ public class SkyNewsScraper {
         Document document = getDocument("https://news.sky.com/uk");
         Elements rawHeadings = document.getElementsByClass("sdc-site-tile__headline-text");
         for(Element title : rawHeadings) {
-            removeTags(title.toString());
+            if(!headings.contains(title.text())){
+                headings.add(title.text());
+            }
         }
         return headings;
-    }
-
-    private static void removeTags(String title) {
-        StringBuilder stringBuilder = new StringBuilder(title);
-        String startTag = "<span class=\"sdc-site-tile__headline-text\">";
-        String endTag = "</span>";
-
-        stringBuilder.replace(0, startTag.length(), "");
-        stringBuilder.replace(stringBuilder.length() - endTag.length(), stringBuilder.length(), "");
-
-        if(!headings.contains(stringBuilder.toString())){
-            headings.add(stringBuilder.toString());
-        }
     }
 
     private static Document getDocument(String url) {

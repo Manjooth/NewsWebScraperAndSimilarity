@@ -7,7 +7,9 @@ public class Main {
 
         ArrayList<String> sky = SkyNewsScraper.run();
         ArrayList<String> bbc = BBCNewsScraper.run();
-        PopulateExcel.insertData(sky, bbc, "NewsTitles");
-        similarity.checkSimilarity(sky, bbc);
+        ArrayList<String> independent = IndependentNewsScraper.run();
+
+        PopulateExcel.insertData(sky, bbc, independent, "NewsTitles");
+        similarity.checkSimilarity(sky, bbc, independent);
     }
 }
