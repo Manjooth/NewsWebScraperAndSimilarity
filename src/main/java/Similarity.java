@@ -10,7 +10,6 @@ public class Similarity {
             for (int j = 0; j < bbc.size(); j++) {
                 double checkSimilarity = similarity(sky.get(i), bbc.get(j));
                 if(checkSimilarity > 0.98){
-                    System.out.println(checkSimilarity);
                     if(!similarStories.contains(sky.get(i))){
                         similarStories.add(sky.get(i));
                     }
